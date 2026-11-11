@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="../deployment-plan.xsd">
+  <step name="创建 auto-test-app 命名空间">
+    <serverSideApply>
+      <file>000-NamespaceDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建 AutoTest 数据库用户和数据库">
+    <serverSideApply>
+      <file>010-InitDatabaseDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建 AutoTest Service 存储卷和声明">
+    <serverSideApply>
+      <file>011-AutoTestServiceStorage.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建 AutoTest Service 配置">
+    <serverSideApply>
+      <file>030-AutoTestServiceConfigMap.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="部署 AutoTest Service">
+    <serverSideApply>
+      <file>040-AutoTestServiceDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="部署 AutoTest Website">
+    <serverSideApply>
+      <file>050-AutoTestWebsiteDep.yaml</file>
+    </serverSideApply>
+  </step>
+</executionPlan>

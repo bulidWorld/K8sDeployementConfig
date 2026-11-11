@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auto-test-service-config
+  namespace: auto-test-app
+
+data:
+  DB_HOST: "pg-ha-rw.database.svc.cluster.local"
+  DB_PORT: "5432"
+  DB_NAME: autotestservice-db
+  DB_USER: autotestservice
+  DB_POOL_SIZE: "10"
+  SERVER_PORT: "80"
+  DB_PASSWORD: "Changeme_123"
+

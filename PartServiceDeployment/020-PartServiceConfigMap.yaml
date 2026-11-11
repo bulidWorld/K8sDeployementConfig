@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: part-service-config
+  namespace: part-app
+data:
+  DB_HOST: "pg-ha-rw.database.svc.cluster.local"
+  DB_PORT: "5432"
+  DB_NAME: "partservice-db"
+  DB_USER: "partservice"
+  DB_PASSWORD: "Changeme_123"
+  DB_POOL_SIZE: "10"
+  SERVER_PORT: "32010"

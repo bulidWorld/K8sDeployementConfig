@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: part-service
+  namespace: part-app
+spec:
+  type: NodePort
+  selector:
+    app: part-service-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 32010
+      targetPort: 32010
+      nodePort: 32010

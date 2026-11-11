@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="../deployment-plan.xsd">
+  <step name="创建 part-app 命名空间">
+    <serverSideApply>
+      <file>000-NamespaceDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建数据库用户和数据库">
+    <serverSideApply>
+      <file>010-InitDatabaseDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建服务存储卷和声明">
+    <serverSideApply>
+      <file>011-PartServiceStorage.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建服务配置">
+    <serverSideApply>
+      <file>020-PartServiceConfigMap.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="部署 Part Service">
+    <serverSideApply>
+      <file>030-PartServiceDeployment.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建 Part Service 服务">
+    <serverSideApply>
+      <file>040-PartServiceService.yaml</file>
+    </serverSideApply>
+  </step>
+</executionPlan>

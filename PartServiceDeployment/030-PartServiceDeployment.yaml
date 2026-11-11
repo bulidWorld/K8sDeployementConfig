@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-service-deployment
+  namespace: part-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: part-service-app
+  template:
+    metadata:
+      labels:
+        app: part-service-app
+    spec:
+      containers:
+        - name: part-service-app
+          image: lingxi.image.io/kunpeng/partapp/part-service:v0.10
+          envFrom:
+            - configMapRef:
+                name: part-service-config
+          volumeMounts:
+            - name: part-service-storage
+              mountPath: /var/service
+      volumes:
+        - name: part-service-storage
+          persistentVolumeClaim:
+            claimName: part-service-pvc

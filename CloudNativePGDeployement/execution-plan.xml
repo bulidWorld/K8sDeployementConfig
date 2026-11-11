@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:noNamespaceSchemaLocation="../deployment-plan.xsd">
+  <step name="创建 database 命名空间">
+    <serverSideApply>
+      <file>CloudNativePGDeployement/00-NamespaceDep.yaml</file>
+    </serverSideApply>
+  </step>
+
+  <step name="给 worker-01 添加 postgres 标签">
+    <patch node="worker-01" type="merge">
+      <file>CloudNativePGDeployement/01-labelNode.yaml</file>
+    </patch>
+  </step>
+  <step name="给 worker-02 添加 postgres 标签">
+    <patch node="worker-02" type="merge">
+      <file>CloudNativePGDeployement/01-labelNode.yaml</file>
+    </patch>
+  </step>
+
+  <step name="创建 StorageClass 和本地 PersistentVolume">
+    <serverSideApply>
+      <file>CloudNativePGDeployement/02-StorageClassDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="安装 CloudNativePG 命名空间和 CRD">
+    <serverSideApply>
+      <file>CloudNativePGDeployement/03-CNGPDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建数据库 Secret">
+    <serverSideApply>
+      <file>CloudNativePGDeployement/04-DataBaseSecretDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建 PostgreSQL 集群">
+    <serverSideApply>
+      <file>CloudNativePGDeployement/05-DataBaseClusterDep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="创建第二个数据库和用户">
+    <serverSideApply>
+      <file>CloudNativePGDeployement/06-Testdb2Dep.yaml</file>
+    </serverSideApply>
+  </step>
+  <step name="可选：创建 PostgreSQL NodePort 服务">
+    <serverSideApply>
+      <file>CloudNativePGDeployement/optional/07-PostgreSQLNodePortDep.yaml</file>
+    </serverSideApply>
+  </step>
+</executionPlan>

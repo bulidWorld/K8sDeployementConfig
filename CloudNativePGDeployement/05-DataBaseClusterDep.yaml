@@ -1,0 +1,47 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg-ha
+  namespace: database
+spec:
+  instances: 2
+  enableSuperuserAccess: false
+
+  bootstrap:
+    initdb:
+      database: testdb
+      owner: testuser
+      secret:
+        name: pg-app-auth
+
+  storage:
+    storageClass: pg-local
+    size: 50Gi
+
+  resources:
+    requests:
+      cpu: "1"
+      memory: 2Gi
+    limits:
+      memory: 2Gi
+
+  affinity:
+    nodeSelector:
+      workload: postgres
+    enablePodAntiAffinity: true
+    podAntiAffinityType: required
+    topologyKey: kubernetes.io/hostname
+
+  postgresql:
+    parameters:
+      synchronous_commit: "on"
+      shared_buffers: "512MB"
+      max_connections: "100"
+      archive_timeout: "60s"
+
+    synchronous:
+      method: any
+      number: 1
+      dataDurability: preferred
+
+  failoverDelay: 10

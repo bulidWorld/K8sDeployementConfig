@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: op-pg-ha-node-port
+  namespace: database
+spec:
+  type: NodePort
+  externalTrafficPolicy: Cluster
+  selector:
+    cnpg.io/cluster: pg-ha
+    cnpg.io/instanceRole: primary
+  ports:
+    - name: postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+      nodePort: 30432

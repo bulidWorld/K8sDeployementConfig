@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pg-testuser2-auth
+  namespace: database
+  labels:
+    cnpg.io/reload: "true"
+type: kubernetes.io/basic-auth
+stringData:
+  username: testuser2
+  # 部署前请替换为实际使用的强密码。
+  password: "123456"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: pg-ha-testuser2
+  namespace: database
+spec:
+  cluster:
+    name: pg-ha
+  name: testuser2
+  login: true
+  passwordSecret:
+    name: pg-testuser2-auth
+  databaseRoleReclaimPolicy: retain
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: pg-ha-testdb2
+  namespace: database
+spec:
+  cluster:
+    name: pg-ha
+  name: testdb2
+  owner: testuser2
+  databaseReclaimPolicy: retain
