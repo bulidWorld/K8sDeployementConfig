@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: clickhouse-operator-kube-system
+  labels:
+    clickhouse.altinity.com/chop: 0.27.4
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: clickhouse-operator-kube-system
+subjects:
+- kind: ServiceAccount
+  name: clickhouse-operator
+  namespace: clickhouse

@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: etc-clickhouse-operator-templatesd-files
+  namespace: clickhouse
+  labels:
+    clickhouse.altinity.com/chop: 0.27.4
+    app: clickhouse-operator
+data:
+  001-templates.json.example: "{\n  \"apiVersion\": \"clickhouse.altinity.com/v1\"\
+    ,\n  \"kind\": \"ClickHouseInstallationTemplate\",\n  \"metadata\": {\n    \"\
+    name\": \"01-default-volumeclaimtemplate\"\n  },\n  \"spec\": {\n    \"templates\"\
+    : {\n      \"volumeClaimTemplates\": [\n        {\n          \"name\": \"chi-default-volume-claim-template\"\
+    ,\n          \"spec\": {\n            \"accessModes\": [\n              \"ReadWriteOnce\"\
+    \n            ],\n            \"resources\": {\n              \"requests\": {\n\
+    \                \"storage\": \"2Gi\"\n              }\n            }\n      \
+    \    }\n        }\n      ],\n      \"podTemplates\": [\n        {\n          \"\
+    name\": \"chi-default-oneperhost-pod-template\",\n          \"distribution\":\
+    \ \"OnePerHost\",\n          \"spec\": {\n            \"containers\" : [\n   \
+    \           {\n                \"name\": \"clickhouse\",\n                \"image\"\
+    : \"clickhouse/clickhouse-server:23.8\",\n                \"ports\": [\n     \
+    \             {\n                    \"name\": \"http\",\n                   \
+    \ \"containerPort\": 8123\n                  },\n                  {\n       \
+    \             \"name\": \"client\",\n                    \"containerPort\": 9000\n\
+    \                  },\n                  {\n                    \"name\": \"interserver\"\
+    ,\n                    \"containerPort\": 9009\n                  }\n        \
+    \        ]\n              }\n            ]\n          }\n        }\n      ]\n\
+    \    }\n  }\n}\n"
+  default-pod-template.yaml.example: "apiVersion: \"clickhouse.altinity.com/v1\"\n\
+    kind: \"ClickHouseInstallationTemplate\"\nmetadata:\n  name: \"default-oneperhost-pod-template\"\
+    \nspec:\n  templates:\n    podTemplates:\n      - name: default-oneperhost-pod-template\n\
+    \        distribution: \"OnePerHost\"\n"
+  default-storage-template.yaml.example: "apiVersion: \"clickhouse.altinity.com/v1\"\
+    \nkind: \"ClickHouseInstallationTemplate\"\nmetadata:\n  name: \"default-storage-template-2Gi\"\
+    \nspec:\n  templates:\n    volumeClaimTemplates:\n      - name: default-storage-template-2Gi\n\
+    \        spec:\n          accessModes:\n            - ReadWriteOnce\n        \
+    \  resources:\n            requests:\n              storage: 2Gi\n"
+  readme: 'Templates in this folder are packaged with an operator and available via
+    ''useTemplate''
+
+    '

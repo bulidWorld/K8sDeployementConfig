@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: etc-keeper-operator-usersd-files
+  namespace: clickhouse
+  labels:
+    clickhouse.altinity.com/chop: 0.27.4
+    app: clickhouse-operator
+data: null
